@@ -1,0 +1,28 @@
+﻿The application you will be creating needs the following features
+* You need to be able to create multiple lists
+   * Purpose: One for work, one for school etc
+* Within each list, you need to be able to
+   * Add items
+      * There should be no limit on items added
+   * Remove items
+   * Name the list
+      * You should not be allowed two lists with the same name
+   * Delete the list
+   * Rename the list
+* Within each item
+   * Name the item
+      * You should be able to have two items with the same name
+         * This is important because maybe you set up all physics homework with the same name but different times.
+   * Add a due date
+      * This needs to be an optional field
+   * Add or at least turn on notifications
+      * This would let you be reminded day before due by default
+      * You need to also allow an alternative pick time
+   * Add a description
+   * Change name
+   * Change description
+* The database
+   * Must follow software engineering principles
+   * Have all the necessary fields
+      * This would include name, due date, description, and maybe list attached too for the items
+      * The list would need their name and maybe children or number of children

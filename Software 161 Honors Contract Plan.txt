@@ -1,0 +1,23 @@
+﻿Application plan: I want to create an application that will allow you to have checklists for multiple things such as homework for school, tasks for work, or even keeping track of buying gifts around the holidays with deadlines that will also show in the application. These items will also need you to allow you to add notes to the items like how long you expect it will take and where and this will probably currently only be in a large string. You will be able to mark items checked within a list and have multiple lists. The application will not be connected to the database created. During the honors contract, the application will be created up to a prototype, have a database designed,  and I will conduct some human performance testing on the prototype.
+
+
+Week 2 (February 22)
+* Create a list of requirements for the application for guidance while creating it
+Week 4 (March 8th)
+* Create a wireframe of the application
+Week 5 (March 15th)
+* Create a mockup of the application
+Week 7(March 29th)
+* Create a prototype for the application
+Week 9(April 12th)
+* Have 3 human performance tests conducted
+Week 10(April 19th)
+* Have a database designed following the Software Engineering Principles
+* Have the project completed
+
+
+The timing is currently odd solely because of Spring Break, I will try to work ahead when possible because for example week 7 to week 9 may be challenging. I am setting these deadlines the way they are due to the current commitments I have.
+
+
+New description:
+I will create the prototype and database for an application that will keep track of tasks that you need to complete along with the deadlines for them. This will require the creation of a wireframe, a mockup, and a prototype. I also must conduct human performance tests. Finally, I will have to create a database for the app with the necessary fields while following Software Engineering principles throughout the process.
