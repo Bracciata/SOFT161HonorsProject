@@ -8,8 +8,6 @@ class MockupPage extends StatefulWidget {
 }
 
 class MockupPageState extends State<MockupPage> {
-  bool expandFlag = true;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,20 +17,60 @@ class MockupPageState extends State<MockupPage> {
       body: Column(
         children: <Widget>[
           new ExpandableListStatefulWidget(
-              expanded: expandFlag,
+              expanded: true,
               child: new ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   print('item $index');
+                  bool itemChecked = false;
                   return new Container(
                     decoration: new BoxDecoration(
                         border: new Border.all(width: 1.0, color: Colors.grey),
                         color: Colors.white),
                     child: new ListTile(
-                        title: new Text(
-                      "Cool $index",
-                      style: new TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black),
-                    )),
+                      title: new Text(
+                        "Cool $index",
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                      leading: Checkbox(
+                        value: itemChecked,
+                        activeColor: Colors.black,
+                        onChanged: (bool value) {
+                          setState(() {
+                            itemChecked = value;
+                          });
+                        },
+                      ),
+                    ),
+                  );
+                },
+                itemCount: 3,
+              )),
+          new ExpandableListStatefulWidget(
+              expanded: false,
+              child: new ListView.builder(
+                itemBuilder: (BuildContext context, int index) {
+                  bool itemChecked = false;
+                  return new Container(
+                    decoration: new BoxDecoration(
+                        border: new Border.all(width: 1.0, color: Colors.grey),
+                        color: Colors.white),
+                    child: new ListTile(
+                      title: new Text(
+                        "Cool $index",
+                        style: new TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
+                      leading: Checkbox(
+                        value: itemChecked,
+                        activeColor: Colors.black,
+                        onChanged: (bool value) {
+                          setState(() {
+                            itemChecked = value;
+                          });
+                        },
+                      ),
+                    ),
                   );
                 },
                 itemCount: 3,
@@ -109,10 +147,10 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
             ],
           )),
       AnimatedContainer(
-        duration: new Duration(milliseconds: 500),
+        duration: new Duration(milliseconds: 300),
         curve: Curves.easeInOut,
         width: screenWidth,
-        height: expanded ? expandedHeight : collapsedHeight,
+        height: expanded ? null : collapsedHeight,
         child: new Container(
           child: child,
         ),
