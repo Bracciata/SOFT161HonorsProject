@@ -7,4 +7,7 @@ class TodoList {
     this.name = name;
     this.todoItems=todoItems;
   }
+  void Sort(){
+    //Sort the items
+  }
 }
