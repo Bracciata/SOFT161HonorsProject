@@ -12,7 +12,7 @@ class MockupPage extends StatefulWidget {
 class MockupPageState extends State<MockupPage> {
   @override
   Widget build(BuildContext context) {
-    List<TodoList> listOfTodoLists = null;
+    List<TodoList> listOfTodoLists = new List<TodoList>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Mockup'),
@@ -21,9 +21,8 @@ class MockupPageState extends State<MockupPage> {
         children: <Widget>[
           new ListView.builder(
             itemBuilder: (BuildContext context, int index) {
-              bool defaultExpanded = index == 0;
               return new ExpandableListStatefulWidget(
-                  expanded: defaultExpanded, theList: listOfTodoLists[index]);
+                  expanded: index==0, theList: listOfTodoLists[index]);
             },
             itemCount: 3,
           )
@@ -59,7 +58,6 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
       children: <Widget>[
         new ListView.builder(
             itemBuilder: (BuildContext context, int index) {
-              bool defaultExpanded = index == 0;
               return new CheckListItem(
                   todoItem: theList.todoItems[index],
                   checkedFunction: StateChangeFunction);
