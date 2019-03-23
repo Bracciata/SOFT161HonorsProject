@@ -18,7 +18,7 @@ class MockupPageState extends State<MockupPage> {
       ),
       body: Column(
         children: <Widget>[
-          new ExpandableContainer(
+          new ExpandableListStatefulWidget(
               expanded: expandFlag,
               child: new ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
@@ -43,28 +43,57 @@ class MockupPageState extends State<MockupPage> {
   }
 }
 
-class ExpandableContainer extends StatelessWidget {
+class ExpandableListStatefulWidget extends StatefulWidget {
   final bool expanded;
   final double collapsedHeight;
   final double expandedHeight;
   final Widget child;
-  final String listTitle;
+  final String name;
 
-  ExpandableContainer(
+  ExpandableListStatefulWidget(
       {@required this.child,
       this.collapsedHeight = 0.0,
       this.expandedHeight = 300.0,
       this.expanded = true,
-      this.listTitle = 'blank'});
+      this.name = 'blank'});
+  @override
+  ExpandableList createState() => ExpandableList(
+      expanded: this.expanded,
+      expandedHeight: this.expandedHeight,
+      child: this.child,
+      name: this.name,
+      collapsedHeight: this.collapsedHeight);
+}
+
+class ExpandableList extends State<ExpandableListStatefulWidget> {
+  bool expanded;
+  final double collapsedHeight;
+  final double expandedHeight;
+  final Widget child;
+  final String name;
+
+  ExpandableList(
+      {@required this.child,
+      @required this.collapsedHeight,
+      @required this.expandedHeight,
+      @required this.expanded,
+      @required this.name});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+
     return new Column(children: [
-      CheckListTitle(
-        name: listTitle,
-        expanded: this.expanded,
-      ),
+      GestureDetector(
+          onTap: () {
+            setState(() {
+              expanded = !expanded;
+              print('tapp');
+            });
+          },
+          child: Row(
+            children: [ Text(name), Text(expanded ? 'Λ' : 'V')],
+          )),
       AnimatedContainer(
         duration: new Duration(milliseconds: 500),
         curve: Curves.easeInOut,
@@ -75,25 +104,6 @@ class ExpandableContainer extends StatelessWidget {
         ),
       )
     ]);
-  }
-}
-
-class CheckListTitle extends StatelessWidget {
-  final bool expanded;
-  final String name;
-  CheckListTitle({
-    @required this.name,
-    this.expanded = true,
-  });
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-        onTap: () {
-          print('MyButton was tapped!');
-        },
-        child: Row(
-          children: [Text(name), Text(expanded ? 'Λ' : 'V')],
-        ));
   }
 }
 
