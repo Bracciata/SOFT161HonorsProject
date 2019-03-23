@@ -89,14 +89,10 @@ class ExpandableListStatefulWidget extends StatefulWidget {
   final String name;
 
   ExpandableListStatefulWidget(
-      {@required this.child,
-      this.expanded = true,
-      this.name = 'blank'});
+      {@required this.child, this.expanded = true, this.name = 'blank'});
   @override
   ExpandableList createState() => ExpandableList(
-      expanded: this.expanded,
-      child: this.child,
-      name: this.name,
+      expanded: this.expanded, child: this.child, name: this.name);
 }
 
 class ExpandableList extends State<ExpandableListStatefulWidget> {
@@ -105,17 +101,13 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
   final String name;
 
   ExpandableList(
-      {@required this.child,
-      @required this.expanded,
-      @required this.name});
+      {@required this.child, @required this.expanded, @required this.name});
 
   @override
   Widget build(BuildContext context) {
     return new ExpansionTile(
       initiallyExpanded: expanded,
-      title: Text(
-        name
-      ),
+      title: Text(name),
       children: <Widget>[child],
     );
   }
