@@ -50,19 +50,21 @@ class ExpandableContainer extends StatelessWidget {
   final Widget child;
   final String listTitle;
 
-  ExpandableContainer({
-    @required this.child,
-    this.collapsedHeight = 0.0,
-    this.expandedHeight = 300.0,
-    this.expanded = true,
-    this.listTitle = 'blank'
-  });
+  ExpandableContainer(
+      {@required this.child,
+      this.collapsedHeight = 0.0,
+      this.expandedHeight = 300.0,
+      this.expanded = true,
+      this.listTitle = 'blank'});
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     return new Column(children: [
-      CheckListTitle(name: listTitle, expanded: this.expanded,),
+      CheckListTitle(
+        name: listTitle,
+        expanded: this.expanded,
+      ),
       AnimatedContainer(
         duration: new Duration(milliseconds: 500),
         curve: Curves.easeInOut,
@@ -73,30 +75,32 @@ class ExpandableContainer extends StatelessWidget {
         ),
       )
     ]);
-  
   }
 }
+
 class CheckListTitle extends StatelessWidget {
   final bool expanded;
   final String name;
-   CheckListTitle({
+  CheckListTitle({
     @required this.name,
     this.expanded = true,
   });
   @override
   Widget build(BuildContext context) {
-    return new Row(children: [
-    Text(name),
-    Text(expanded?'Λ':'V')
-    ],
-    );
+    return GestureDetector(
+        onTap: () {
+          print('MyButton was tapped!');
+        },
+        child: Row(
+          children: [Text(name), Text(expanded ? 'Λ' : 'V')],
+        ));
   }
 }
-class CheckListItem extends StatelessWidget{
+
+/*class CheckListItem extends StatelessWidget {
   final String text;
   final String checked;
   final String dueDate;
   final String dateAdded;
   final String notes;
-}
-
+}*/
