@@ -111,21 +111,26 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
       children: <Widget>[child],
     );
   }
-  stateChangeFunction(){
-    setState(() {
-      
-    });
+
+  stateChangeFunction() {
+    setState(() {});
   }
 }
 
 class CheckListItem extends StatelessWidget {
   final String title;
-   bool checked;
+  bool checked;
   final String dueDate;
   final String dateAdded;
   final String notes;
   final Function checkedFunction;
-  CheckListItem({this.title,this.checked,this.dueDate,this.dateAdded,this.notes,this.checkedFunction });
+  CheckListItem(
+      {this.title,
+      this.checked,
+      this.dueDate,
+      this.dateAdded,
+      this.notes,
+      this.checkedFunction});
 
   @override
   Widget build(BuildContext context) {
@@ -143,8 +148,8 @@ class CheckListItem extends StatelessWidget {
           value: checked,
           activeColor: Colors.black,
           onChanged: (bool value) {
-            checked=value;
-           checkedFunction(value:value,currentValueRef:checked);
+            checked = value;
+            checkedFunction(value: value, currentValueRef: checked);
           },
         ),
       ),
