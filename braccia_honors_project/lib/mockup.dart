@@ -92,7 +92,11 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
             });
           },
           child: Row(
-            children: [ Text(name), Text(expanded ? 'Λ' : 'V')],
+            children: [
+              Expanded(child: Text(name)),
+              Expanded(
+                  child: Text(expanded ? 'Λ' : 'V', textAlign: TextAlign.right))
+            ],
           )),
       AnimatedContainer(
         duration: new Duration(milliseconds: 500),
