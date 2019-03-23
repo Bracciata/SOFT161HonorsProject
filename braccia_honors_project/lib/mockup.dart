@@ -18,6 +18,7 @@ class MockupPageState extends State<MockupPage> {
         children: <Widget>[
           new ExpandableListStatefulWidget(
               expanded: true,
+              name: 'School',
               child: new ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   print('item $index');
@@ -48,6 +49,7 @@ class MockupPageState extends State<MockupPage> {
               )),
           new ExpandableListStatefulWidget(
               expanded: false,
+              name: 'Work',
               child: new ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
                   bool itemChecked = false;
@@ -150,7 +152,7 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
         duration: new Duration(milliseconds: 300),
         curve: Curves.easeInOut,
         width: screenWidth,
-        height: expanded ? null : collapsedHeight,
+        height: expanded ? expandedHeight : collapsedHeight,
         child: new Container(
           child: child,
         ),
