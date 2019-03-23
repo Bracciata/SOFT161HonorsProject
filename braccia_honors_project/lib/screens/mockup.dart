@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:braccia_honors_project/classes/lists.dart';
+import 'package:braccia_honors_project/classes/items.dart';
 
 class MockupPage extends StatefulWidget {
   MockupPage({Key key}) : super(key: key);
@@ -108,7 +110,7 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
     return new ExpansionTile(
       initiallyExpanded: expanded,
       title: Text(name),
-      children: <Widget>[child],
+      children: <Widget>[],
     );
   }
 
@@ -156,3 +158,8 @@ class CheckListItem extends StatelessWidget {
     );
   }
 }
+
+List<TodoList> lists = [
+  new TodoList('School', [new Item(), new Item()]),
+  new TodoList('Work', [new Item(), new Item()]),
+];
