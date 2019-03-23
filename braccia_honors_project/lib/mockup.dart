@@ -85,79 +85,39 @@ class MockupPageState extends State<MockupPage> {
 
 class ExpandableListStatefulWidget extends StatefulWidget {
   final bool expanded;
-  final double collapsedHeight;
-  final double expandedHeight;
   final Widget child;
   final String name;
 
   ExpandableListStatefulWidget(
       {@required this.child,
-      this.collapsedHeight = 0.0,
-      this.expandedHeight = 300.0,
       this.expanded = true,
       this.name = 'blank'});
   @override
   ExpandableList createState() => ExpandableList(
       expanded: this.expanded,
-      expandedHeight: this.expandedHeight,
       child: this.child,
       name: this.name,
-      collapsedHeight: this.collapsedHeight);
 }
 
 class ExpandableList extends State<ExpandableListStatefulWidget> {
   bool expanded;
-  final double collapsedHeight;
-  final double expandedHeight;
   final Widget child;
   final String name;
 
   ExpandableList(
       {@required this.child,
-      @required this.collapsedHeight,
-      @required this.expandedHeight,
       @required this.expanded,
       @required this.name});
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-
-    return new Column(children: [
-      GestureDetector(
-          onTap: () {
-            setState(() {
-              expanded = !expanded;
-              print('tapp');
-            });
-          },
-          child: Row(
-            children: [
-              Expanded(
-                  child: Text(
-                name,
-                style: new TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black),
-              )),
-              Expanded(
-                  child: Text(
-                expanded ? 'Λ' : 'V',
-                textAlign: TextAlign.right,
-                style: new TextStyle(
-                    fontWeight: FontWeight.bold, color: Colors.black),
-              ))
-            ],
-          )),
-      AnimatedContainer(
-        duration: new Duration(milliseconds: 300),
-        curve: Curves.easeInOut,
-        width: screenWidth,
-        height: expanded ? expandedHeight : collapsedHeight,
-        child: new Container(
-          child: child,
-        ),
-      )
-    ]);
+    return new ExpansionTile(
+      initiallyExpanded: expanded,
+      title: Text(
+        name
+      ),
+      children: <Widget>[child],
+    );
   }
 }
 
