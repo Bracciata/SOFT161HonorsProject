@@ -14,7 +14,28 @@ class PrototypePageState extends State<PrototypePage> {
       appBar: AppBar(
         title: Text('Prototype'),
       ),
-      body: Center(),
+      body: Column(
+        children: <Widget>[],
+      ),
+    );
+  }
+}
+
+class ListTitle extends StatelessWidget {
+  final String name;
+  final bool expanded;
+  ListTitle({Key key, this.name, this.expanded}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return new DropdownButton<String>(
+      items: <String>['A', 'B', 'C', 'D'].map((String value) {
+        return new DropdownMenuItem<String>(
+          value: value,
+          child: new Text(value),
+        );
+      }).toList(),
+      onChanged: (_) {},
     );
   }
 }
