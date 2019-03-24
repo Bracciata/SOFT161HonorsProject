@@ -3,11 +3,11 @@ import 'package:braccia_honors_project/classes/items.dart';
 class TodoList {
   String name;
   List<Item> todoItems;
-  TodoList(String name, List<Item> todoItems){
+  TodoList(String name, List<Item> todoItems) {
     this.name = name;
-    this.todoItems=todoItems;
+    this.todoItems = todoItems;
   }
-  void Sort(){
+  void sort() {
     //Sort the items
   }
 }

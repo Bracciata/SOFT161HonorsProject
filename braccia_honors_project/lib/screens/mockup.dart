@@ -22,7 +22,7 @@ class MockupPageState extends State<MockupPage> {
           new ListView.builder(
             itemBuilder: (BuildContext context, int index) {
               return new ExpandableListStatefulWidget(
-                  expanded: index==0, theList: listOfTodoLists[index]);
+                  expanded: index == 0, theList: listOfTodoLists[index]);
             },
             itemCount: 3,
           )
@@ -60,14 +60,14 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
             itemBuilder: (BuildContext context, int index) {
               return new CheckListItem(
                   todoItem: theList.todoItems[index],
-                  checkedFunction: StateChangeFunction);
+                  checkedFunction: stateChangeFunction);
             },
             itemCount: theList.todoItems.length)
       ],
     );
   }
 
-  StateChangeFunction() {
+  stateChangeFunction() {
     setState(() {});
   }
 }
