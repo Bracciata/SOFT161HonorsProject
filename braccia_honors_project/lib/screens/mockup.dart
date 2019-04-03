@@ -85,7 +85,7 @@ class CheckListItem extends StatelessWidget {
           color: Colors.white),
       child: new ListTile(
         title: new Text(
-          todoItem.title,
+          todoItem.name,
           style:
               new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
         ),
@@ -103,6 +103,6 @@ class CheckListItem extends StatelessWidget {
 }
 
 List<TodoList> lists = [
-  new TodoList('School', [new Item(), new Item()]),
+  new TodoList('School', [new Item('Email Professor', '',false, new DateTime(0),new DateTime(1we11e)), new Item()]),
   new TodoList('Work', [new Item(), new Item()]),
 ];
