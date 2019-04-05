@@ -103,6 +103,6 @@ class CheckListItem extends StatelessWidget {
 }
 
 List<TodoList> lists = [
-  new TodoList('School', [new Item('Email Professor', '',false, new DateTime(0),new DateTime(1we11e)), new Item()]),
+  new TodoList('School', [new Item('Email Professor', '',false, new DateTime(0),new DateTime(2020)), new Item()]),
   new TodoList('Work', [new Item(), new Item()]),
 ];
