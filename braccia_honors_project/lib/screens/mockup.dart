@@ -12,7 +12,7 @@ class MockupPage extends StatefulWidget {
 class MockupPageState extends State<MockupPage> {
   @override
   Widget build(BuildContext context) {
-    List<TodoList> listOfTodoLists = new List<TodoList>();
+    List<TodoList> listOfTodoLists = lists;
     return Scaffold(
       appBar: AppBar(
         title: Text('Mockup'),
@@ -26,6 +26,7 @@ class MockupPageState extends State<MockupPage> {
             },
             itemCount: 3,
           )
+          
         ],
       ),
     );
@@ -103,6 +104,19 @@ class CheckListItem extends StatelessWidget {
 }
 
 List<TodoList> lists = [
-  new TodoList('School', [new Item('Email Professor', '',false, new DateTime(0),new DateTime(2020)), new Item()]),
-  new TodoList('Work', [new Item(), new Item()]),
+  new TodoList('School', [
+    new Item(
+        'Email Professor',
+        'I need to email my physics professor by 9 tonight to get 10 points back on the exam.',
+        new DateTime(2021),
+        null,
+        null,
+        new DateTime(2020)),
+    new Item('Prepare Poster For CSESAB', '', new DateTime(0), null, null,
+        new DateTime(2021))
+  ]),
+  new TodoList('Work', [
+    new Item('I will not be shown in mockup', '', new DateTime(2011), null,
+        null, DateTime(2020)),
+  ]),
 ];
