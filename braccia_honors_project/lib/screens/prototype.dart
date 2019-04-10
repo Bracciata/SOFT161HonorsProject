@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:braccia_honors_project/classes/lists.dart';
+import 'package:braccia_honors_project/classes/items.dart';
 
 class PrototypePage extends StatefulWidget {
   PrototypePage({Key key}) : super(key: key);
@@ -8,67 +10,124 @@ class PrototypePage extends StatefulWidget {
 }
 
 class PrototypePageState extends State<PrototypePage> {
-  bool expandFlag = false;
-
   @override
   Widget build(BuildContext context) {
+    List<TodoList> listOfTodoLists = lists;
     return Scaffold(
       appBar: AppBar(
         title: Text('Prototype'),
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.add),
+            tooltip: 'Add New List',
+            onPressed: null,
+          )
+        ],
       ),
       body: Column(
-        children: <Widget>[ new ExpandableContainer(
-              expanded: expandFlag,
+        children: <Widget>[
+          new Expanded(
               child: new ListView.builder(
-                itemBuilder: (BuildContext context, int index) {
-                  return new Container(
-                    decoration:
-                        new BoxDecoration(border: new Border.all(width: 1.0, color: Colors.grey), color: Colors.black),
-                    child: new ListTile(
-                      title: new Text(
-                        "Cool $index",
-                        style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-                      ),
-                      leading: new Icon(
-                        Icons.local_pizza,
-                        color: Colors.white,
-                      ),
-                    ),
-                  );
-                },
-                itemCount: 15,
-              ))
+            itemBuilder: (BuildContext context, int index) {
+              return new ExpandableListStatefulWidget(
+                  expanded: index == 0, theList: listOfTodoLists[index]);
+            },
+            itemCount: listOfTodoLists.length,
+          ))
         ],
       ),
     );
   }
 }
 
-class ExpandableContainer extends StatelessWidget {
+class ExpandableListStatefulWidget extends StatefulWidget {
   final bool expanded;
-  final double collapsedHeight;
-  final double expandedHeight;
-  final Widget child;
+  final TodoList theList;
 
-  ExpandableContainer({
-    @required this.child,
-    this.collapsedHeight = 0.0,
-    this.expandedHeight = 300.0,
-    this.expanded = true,
-  });
+  ExpandableListStatefulWidget({this.theList, this.expanded = true});
+  @override
+  ExpandableList createState() => ExpandableList(
+        expanded: this.expanded,
+        theList: this.theList,
+      );
+}
+
+class ExpandableList extends State<ExpandableListStatefulWidget> {
+  bool expanded;
+  final TodoList theList;
+
+  ExpandableList({this.theList, @required this.expanded});
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    return new AnimatedContainer(
-      duration: new Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-      width: screenWidth,
-      height: expanded ? expandedHeight : collapsedHeight,
-      child: new Container(
-        child: child,
-        decoration: new BoxDecoration(border: new Border.all(width: 1.0, color: Colors.blue)),
+    return ExpansionTile(
+      initiallyExpanded: expanded,
+      title: new Text(theList.name),
+      children: <Widget>[
+        new ListView.builder(
+            shrinkWrap: true,
+            itemBuilder: (BuildContext context, int index) {
+              return new CheckListItem(
+                  todoItem: theList.todoItems[index],
+                  checkedFunction: stateChangeFunction);
+            },
+            itemCount: theList.todoItems.length),
+        new ListTile(
+          leading: new Icon(Icons.add),
+          title: new Text('Add item'),
+        )
+      ],
+    );
+  }
+
+  stateChangeFunction() {
+    setState(() {});
+  }
+}
+
+class CheckListItem extends StatelessWidget {
+  final Item todoItem;
+  final Function checkedFunction;
+  CheckListItem({@required this.todoItem, @required this.checkedFunction});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: new Text(
+        todoItem.name,
+        style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
       ),
+      leading: Checkbox(
+        value: todoItem.checked,
+        activeColor: Colors.black,
+        onChanged: (bool value) {
+          todoItem.checked = value;
+          checkedFunction(value: value, currentValueRef: todoItem.checked);
+        },
+      ),
+      trailing: todoItem.dueDate == null
+          ? new Container()
+          : new Text(todoItem.dueDate.toIso8601String()),
+      subtitle:
+          todoItem.notes == '' ? new Container() : new Text(todoItem.notes),
     );
   }
 }
+
+List<TodoList> lists = [
+  new TodoList('School', [
+    new Item(
+        'Email Professor',
+        'I need to email my physics professor by 9 tonight to get 10 points back on the exam.',
+        new DateTime(2021),
+        null,
+        null,
+        new DateTime(2020)),
+    new Item('Prepare Poster For CSESAB', '', new DateTime(0), null, null,
+        new DateTime(2021))
+  ]),
+  new TodoList('Work', [
+    new Item('I will not be shown in Prototype', '', new DateTime(2011), null,
+        null, DateTime(2020)),
+  ]),
+];
