@@ -105,6 +105,11 @@ class CheckListItem extends StatelessWidget {
           checkedFunction(value: value, currentValueRef: todoItem.checked);
         },
       ),
+      trailing: todoItem.dueDate == null
+          ? new Container()
+          : new Text(todoItem.dueDate.toIso8601String()),
+      subtitle:
+          todoItem.notes == '' ? new Container() : new Text(todoItem.notes),
     );
   }
 }
