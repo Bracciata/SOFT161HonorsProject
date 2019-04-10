@@ -16,6 +16,13 @@ class MockupPageState extends State<MockupPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Mockup'),
+        actions: <Widget>[
+          new IconButton(
+            icon: new Icon(Icons.add),
+            tooltip: 'Add New List',
+            onPressed: null,
+          )
+        ],
       ),
       body: Column(
         children: <Widget>[
@@ -58,13 +65,17 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
       title: new Text(theList.name),
       children: <Widget>[
         new ListView.builder(
-          shrinkWrap: true,
+            shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
               return new CheckListItem(
                   todoItem: theList.todoItems[index],
                   checkedFunction: stateChangeFunction);
             },
-            itemCount: theList.todoItems.length)
+            itemCount: theList.todoItems.length),
+        new ListTile(
+          leading: new Icon(Icons.add),
+          title: new Text('Add item'),
+        )
       ],
     );
   }
