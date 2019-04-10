@@ -19,14 +19,14 @@ class MockupPageState extends State<MockupPage> {
       ),
       body: Column(
         children: <Widget>[
-          new ListView.builder(
+          new Expanded(
+              child: new ListView.builder(
             itemBuilder: (BuildContext context, int index) {
               return new ExpandableListStatefulWidget(
                   expanded: index == 0, theList: listOfTodoLists[index]);
             },
-            itemCount: 3,
-          )
-          
+            itemCount: listOfTodoLists.length,
+          ))
         ],
       ),
     );
@@ -53,11 +53,12 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new ExpansionTile(
+    return ExpansionTile(
       initiallyExpanded: expanded,
-      title: Text(theList.name),
+      title: new Text(theList.name),
       children: <Widget>[
         new ListView.builder(
+          shrinkWrap: true,
             itemBuilder: (BuildContext context, int index) {
               return new CheckListItem(
                   todoItem: theList.todoItems[index],
@@ -80,24 +81,18 @@ class CheckListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return new Container(
-      decoration: new BoxDecoration(
-          border: new Border.all(width: 1.0, color: Colors.grey),
-          color: Colors.white),
-      child: new ListTile(
-        title: new Text(
-          todoItem.name,
-          style:
-              new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
-        ),
-        leading: Checkbox(
-          value: todoItem.checked,
-          activeColor: Colors.black,
-          onChanged: (bool value) {
-            todoItem.checked = value;
-            checkedFunction(value: value, currentValueRef: todoItem.checked);
-          },
-        ),
+    return ListTile(
+      title: new Text(
+        todoItem.name,
+        style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+      ),
+      leading: Checkbox(
+        value: todoItem.checked,
+        activeColor: Colors.black,
+        onChanged: (bool value) {
+          todoItem.checked = value;
+          checkedFunction(value: value, currentValueRef: todoItem.checked);
+        },
       ),
     );
   }
