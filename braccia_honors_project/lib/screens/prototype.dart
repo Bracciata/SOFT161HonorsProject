@@ -20,7 +20,7 @@ class PrototypePageState extends State<PrototypePage> {
           new IconButton(
             icon: new Icon(Icons.add),
             tooltip: 'Add New List',
-            onPressed: null,
+            onPressed:(){ _onTapAdd(context);},
           )
         ],
       ),
@@ -37,6 +37,44 @@ class PrototypePageState extends State<PrototypePage> {
         ],
       ),
     );
+  }
+  void _onTapAdd(BuildContext context) {
+    var listName = "";
+    showDialog(
+        context: context,
+        child: new AlertDialog(
+          title: new Text("Add List"),
+          content: new Column(
+            children: [
+              new Row(
+                children: <Widget>[
+                  new Expanded(
+                      child: new TextField(
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                        labelText: 'List Name', hintText: 'eg. Hobby, School, Work.'),
+                    onChanged: (value) {
+                      listName = value;
+                    },
+                  ))
+                ],
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                lists.add(new TodoList(listName, []));
+                Navigator.pop(context);
+                }
+            ),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {Navigator.pop(context);},
+            ),
+          ],
+        ));
   }
 }
 
@@ -75,13 +113,98 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
         new ListTile(
           leading: new Icon(Icons.add),
           title: new Text('Add item'),
+          onTap: () => _onTapAdd(context),
         )
       ],
     );
   }
 
+  void _onTapAdd(BuildContext context) {
+    var itemTitle = "";
+    var itemDesc = "";
+    var notiEnabled = false;
+    showDialog(
+        context: context,
+        child: new AlertDialog(
+          title: new Text("Add Item"),
+          content: new Column(
+            children: [
+              new Row(
+                children: <Widget>[
+                  new Expanded(
+                      child: new TextField(
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                        labelText: 'Item Name', hintText: 'eg. Call Mom.'),
+                    onChanged: (value) {
+                      itemTitle = value;
+                    },
+                  ))
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  new Expanded(
+                      child: new TextField(
+                    autofocus: true,
+                    decoration: new InputDecoration(
+                        labelText: 'Item Description',
+                        hintText:
+                            'eg. You need to call her because mothers day is coming up...'),
+                    onChanged: (value) {
+                      itemDesc = value;
+                    },
+                  ))
+                ],
+              ),
+              new Row(
+                children: <Widget>[
+                  new Checkbox(
+                    value: notiEnabled,
+                    activeColor: Colors.black,
+                    onChanged: (bool value) {
+                        notiEnabled = !value;
+                      setState(() {
+                      });
+                    },
+                  ),
+                  new Text("Check to turn on notifications.")
+                ],
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: () {
+                theList.todoItems.add(new Item(itemTitle, itemDesc, DateTime.now(), false, notiEnabled, DateTime.now()));
+                Navigator.pop(context);
+                }
+            ),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {Navigator.pop(context);},
+            ),
+          ],
+        ));
+  }
+
   stateChangeFunction() {
     setState(() {});
+  }
+
+  List<Item> sortItems(List<Item> items) {
+    List<Item> sortedList = new List<Item>();
+    int numberChecked = 0;
+    for (Item i in items) {
+      if (i.checked) {
+        sortedList.add(i);
+        numberChecked += 1;
+      } else {
+        sortedList.insert(0, i);
+      }
+    }
+    List<Item> nonChecked = new List<Item>();
   }
 }
 
@@ -127,7 +250,7 @@ List<TodoList> lists = [
         new DateTime(2021))
   ]),
   new TodoList('Work', [
-    new Item('I will not be shown in Prototype', '', new DateTime(2011), null,
+    new Item('I will not be shownable in mockup', '', new DateTime(2011), null,
         null, DateTime(2020)),
   ]),
 ];
