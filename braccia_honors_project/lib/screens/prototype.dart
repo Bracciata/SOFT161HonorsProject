@@ -20,7 +20,9 @@ class PrototypePageState extends State<PrototypePage> {
           new IconButton(
             icon: new Icon(Icons.add),
             tooltip: 'Add New List',
-            onPressed:(){ _onTapAdd(context);},
+            onPressed: () {
+              _onTapAdd(context);
+            },
           )
         ],
       ),
@@ -38,6 +40,7 @@ class PrototypePageState extends State<PrototypePage> {
       ),
     );
   }
+
   void _onTapAdd(BuildContext context) {
     var listName = "";
     showDialog(
@@ -52,7 +55,8 @@ class PrototypePageState extends State<PrototypePage> {
                       child: new TextField(
                     autofocus: true,
                     decoration: new InputDecoration(
-                        labelText: 'List Name', hintText: 'eg. Hobby, School, Work.'),
+                        labelText: 'List Name',
+                        hintText: 'eg. Hobby, School, Work.'),
                     onChanged: (value) {
                       listName = value;
                     },
@@ -63,15 +67,16 @@ class PrototypePageState extends State<PrototypePage> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                lists.add(new TodoList(listName, []));
-                Navigator.pop(context);
-                }
-            ),
+                child: Text('Ok'),
+                onPressed: () {
+                  lists.add(new TodoList(listName, []));
+                  Navigator.pop(context);
+                }),
             FlatButton(
               child: Text('Cancel'),
-              onPressed: () {Navigator.pop(context);},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ],
         ));
@@ -100,7 +105,12 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
   Widget build(BuildContext context) {
     return ExpansionTile(
       initiallyExpanded: expanded,
-      title: new Text(theList.name),
+      title: new InkWell(
+        child: Text(theList.name),
+        onLongPress: () {
+          _deleteList();
+        },
+      ),
       children: <Widget>[
         new ListView.builder(
             shrinkWrap: true,
@@ -117,6 +127,32 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
         )
       ],
     );
+  }
+
+  void _deleteList() {
+    showDialog(
+        context: context,
+        child: new AlertDialog(
+          title: new Text(
+              "Are you sure you would like to delete " + theList.name + "?"),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  lists.remove(theList);
+
+                  stateChangeFunction();
+
+                  Navigator.pop(context);
+                }),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ));
   }
 
   void _onTapAdd(BuildContext context) {
@@ -163,9 +199,8 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
                     value: notiEnabled,
                     activeColor: Colors.black,
                     onChanged: (bool value) {
-                        notiEnabled = !value;
-                      setState(() {
-                      });
+                      notiEnabled = !value;
+                      setState(() {});
                     },
                   ),
                   new Text("Check to turn on notifications.")
@@ -175,15 +210,17 @@ class ExpandableList extends State<ExpandableListStatefulWidget> {
           ),
           actions: <Widget>[
             FlatButton(
-              child: Text('Ok'),
-              onPressed: () {
-                theList.todoItems.add(new Item(itemTitle, itemDesc, DateTime.now(), false, notiEnabled, DateTime.now()));
-                Navigator.pop(context);
-                }
-            ),
+                child: Text('Ok'),
+                onPressed: () {
+                  theList.todoItems.add(new Item(itemTitle, itemDesc,
+                      DateTime.now(), false, notiEnabled, DateTime.now()));
+                  Navigator.pop(context);
+                }),
             FlatButton(
               child: Text('Cancel'),
-              onPressed: () {Navigator.pop(context);},
+              onPressed: () {
+                Navigator.pop(context);
+              },
             ),
           ],
         ));
@@ -216,9 +253,15 @@ class CheckListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: new Text(
-        todoItem.name,
-        style: new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+      title: new InkWell(
+        child: Text(
+          todoItem.name,
+          style:
+              new TextStyle(fontWeight: FontWeight.bold, color: Colors.black),
+        ),
+        onLongPress: () {
+          _deleteItemPopup(context, todoItem);
+        },
       ),
       leading: Checkbox(
         value: todoItem.checked,
@@ -234,6 +277,36 @@ class CheckListItem extends StatelessWidget {
       subtitle:
           todoItem.notes == '' ? new Container() : new Text(todoItem.notes),
     );
+  }
+
+  void _deleteItemPopup(BuildContext context, Item item) {
+    showDialog(
+        context: context,
+        child: new AlertDialog(
+          title: new Text(
+              "Are you sure you would like to delete " + item.name + "?"),
+          actions: <Widget>[
+            FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  for (TodoList list in lists) {
+                    if (list.todoItems.contains(item)) {
+                      list.todoItems.remove(item);
+                      checkedFunction();
+                      break;
+                    }
+                  }
+
+                  Navigator.pop(context);
+                }),
+            FlatButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        ));
   }
 }
 
